@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Circuit Tech — Monitoring Dashboard
+    </title>
+
+
+    <!-- Google Font -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- Your existing stylesheet -->
+
+    <link
+        rel="stylesheet"
+        href="./css/style.css"
+    >
+
+
+    <!-- Chart.js -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/chart.js"
+    ></script>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         DASHBOARD WRAPPER
+    ====================================================== -->
+
+    <div class="dashboard-wrapper">
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside
+            class="sidebar"
+            id="sidebar"
+        >
+
+            <!-- Brand -->
+
+            <div class="sidebar-brand">
+
+                <div class="brand-icon">
+                    CT
+                </div>
+
+                <div class="brand-text">
+
+                    <h2>
+                        Circuit Tech
+                    </h2>
+
+                    <span>
+                        Smart Monitoring
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Navigation -->
+
+            <nav class="sidebar-nav">
+
+
+                <div class="nav-section">
+
+                    <span class="nav-title">
+                        MONITORING
+                    </span>
+
+
+                    <a
+                        href="#"
+                        class="nav-item active"
+                    >
+
+                        <span class="nav-icon">
+                            <svg
+                                width="17"
+                                height="17"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                            >
+
+                                <path
+                                    d="M4 19V5"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+
+                                <path
+                                    d="M4 19H20"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                />
+
+                                <path
+                                    d="M7 15L10.5 11.5L14 14L19 8"
+                                    stroke="currentColor"
+                                    stroke-width="1.7"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+
+                            </svg>
+                        </span>
+
+
+                        <span>
+                            Dashboard
+                        </span>
+
+                    </a>
+
+
+
+            <!-- Sidebar bottom -->
+
+            <div class="sidebar-bottom">
+
+                <div class="system-status">
+
+                    <span class="status-dot"></span>
+
+                    <div>
+                        <span
+                            id="connectionStatus"
+                            class="status-value"
+                        >
+                            Connecting...
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =================================================
+             MAIN CONTENT
+        ================================================== -->
+
+        <main class="main-content">
+
+
+            <!-- =================================================
+                 TOP BAR
+            ================================================== -->
+
+            <header class="topbar">
+
+
+                <!-- Mobile Menu -->
+
+                <button
+                    class="mobile-menu"
+                    id="mobileMenu"
+                    aria-label="Open menu"
+                >
+
+                    <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
+                        <path
+                            d="M4 6H20"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M4 12H20"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M4 18H20"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                        />
+
+                    </svg>
+
+                </button>
+
+
+                <!-- Page Title -->
+
+                <div class="page-heading">
+
+                    <span class="page-eyebrow">
+                        CIRCUIT TECH
+                    </span>
+
+                    <h1>
+                        Monitoring Dashboard
+                    </h1>
+
+                    <p>
+                        Real-time environmental sensor data
+                    </p>
+
+                </div>
+
+
+                <!-- Top Actions -->
+
+                <div class="topbar-actions">
+
+
+                    <!-- Connection -->
+
+
+                    <!-- Last Updated -->
+
+                    <span
+                        class="last-updated"
+                        id="lastUpdated"
+                    >
+                        Waiting for data...
+                    </span>
+
+
+                    <!-- Refresh -->
+
+                    <button
+                        class="icon-button"
+                        id="refreshButton"
+                        title="Refresh data"
+                    >
+
+                        <svg
+                            width="17"
+                            height="17"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                        >
+
+                            <path
+                                d="M20 11A8.1 8.1 0 0 0 5.2 6.5L3 9"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                            <path
+                                d="M3 5V9H7"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                            <path
+                                d="M4 13A8.1 8.1 0 0 0 18.8 17.5L21 15"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                            <path
+                                d="M21 19V15H17"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                        </svg>
+
+                    </button>
+
+
+                    <!-- User -->
+
+                    <div class="user-area">
+
+                        <div
+                            class="user-avatar"
+                            id="userAvatar"
+                        >
+                            U
+                        </div>
+
+
+                        <div class="user-details">
+
+                            <span
+                                id="userName"
+                                class="user-name"
+                            >
+                                User
+                            </span>
+
+                            <span
+                                id="userEmail"
+                                class="user-email"
+                            >
+                                Loading...
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Logout -->
+
+                    <button
+                        type="button"
+                        class="logout-button"
+                        id="logoutButton"
+                        title="Logout"
+                    >
+
+                        <svg
+                            width="17"
+                            height="17"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                        >
+
+                            <path
+                                d="M10 17L15 12L10 7"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                            <path
+                                d="M15 12H3"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                            />
+
+                            <path
+                                d="M19 4H21C21.55 4 22 4.45 22 5V19C22 19.55 21.55 20 21 20H19"
+                                stroke="currentColor"
+                                stroke-width="1.7"
+                                stroke-linecap="round"
+                            />
+
+                        </svg>
+
+                    </button>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- =================================================
+                 CONTENT
+            ================================================== -->
+
+            <section class="dashboard-content">
+
+
+                <!-- =================================================
+                     SUMMARY
+                ================================================== -->
+
+                <div class="section-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            REAL-TIME DATA
+                        </span>
+
+                        <h2>
+                            Environment overview
+                        </h2>
+
+                    </div>
+
+
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     METRIC CARDS
+                ================================================== -->
+
+                <div class="metric-grid">
+
+
+                    <!-- Temperature -->
+
+                    <div class="metric-card">
+
+                        <div class="metric-top">
+
+                            <div>
+
+                                <span class="metric-label">
+                                    Temperature
+                                </span>
+
+                                <h3
+                                    id="temperatureValue"
+                                >
+                                    -- °C
+                                </h3>
+
+                            </div>
+
+
+                            <div class="metric-icon temperature-icon">
+
+                                <svg
+                                    width="18"
+                                    height="18"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                >
+
+                                    <path
+                                        d="M14 14.76V5C14 3.9 13.1 3 12 3C10.9 3 10 3.9 10 5V14.76C8.79 15.46 8 16.75 8 18.2C8 20.3 9.7 22 11.8 22H12.2C14.3 22 16 20.3 16 18.2C16 16.75 15.21 15.46 14 14.76Z"
+                                        stroke="currentColor"
+                                        stroke-width="1.6"
+                                    />
+
+                                    <path
+                                        d="M12 7V17"
+                                        stroke="currentColor"
+                                        stroke-width="1.6"
+                                        stroke-linecap="round"
+                                    />
+
+                                </svg>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="metric-footer">
+
+                            <span>
+                                Field 1
+                            </span>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Humidity -->
+
+                    <div class="metric-card">
+
+                        <div class="metric-top">
+
+                            <div>
+
+                                <span class="metric-label">
+                                    Humidity
+                                </span>
+
+                                <h3
+                                    id="humidityValue"
+                                >
+                                    -- %
+                                </h3>
+
+                            </div>
+
+
+                            <div class="metric-icon humidity-icon">
+
+                                <svg
+                                    width="18"
+                                    height="18"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                >
+
+                                    <path
+                                        d="M12 3C12 3 6 10 6 14.5C6 18.09 8.69 21 12 21C15.31 21 18 18.09 18 14.5C18 10 12 3 12 3Z"
+                                        stroke="currentColor"
+                                        stroke-width="1.6"
+                                    />
+
+                                </svg>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="metric-footer">
+
+                            <span>
+                                Field 2
+                            </span>
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Soil Moisture -->
+
+                    <div class="metric-card">
+
+                        <div class="metric-top">
+
+                            <div>
+
+                                <span class="metric-label">
+                                    Soil Moisture
+                                </span>
+
+                                <h3
+                                    id="soilMoistureValue"
+                                >
+                                    -- %
+                                </h3>
+
+                            </div>
+
+
+                            <div class="metric-icon soil-icon">
+
+                                <svg
+                                    width="18"
+                                    height="18"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                >
+
+                                    <path
+                                        d="M12 3C12 3 7 9 7 13.5C7 16.54 9.24 19 12 19C14.76 19 17 16.54 17 13.5C17 9 12 3 12 3Z"
+                                        stroke="currentColor"
+                                        stroke-width="1.6"
+                                    />
+
+                                    <path
+                                        d="M5 21H19"
+                                        stroke="currentColor"
+                                        stroke-width="1.6"
+                                        stroke-linecap="round"
+                                    />
+
+                                </svg>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="metric-footer">
+
+                            <span>
+                                Field 3
+                            </span>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     CHARTS
+                ================================================== -->
+
+                <div class="charts-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            SENSOR HISTORY
+                        </span>
+
+                        <h2>
+                            Environmental trends
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="charts-grid">
+
+
+                    <!-- =================================================
+                         TEMPERATURE CHART
+                    ================================================== -->
+
+                    <div class="chart-card">
+
+                        <div class="chart-card-header">
+
+                            <div>
+
+                                <span class="chart-number">
+                                    FIELD 01
+                                </span>
+
+                                <h3>
+                                    Temperature
+                                </h3>
+
+                                <p>
+                                    Temperature readings over time
+                                </p>
+
+                            </div>
+
+
+                            <div class="chart-badge green">
+
+                                <span></span>
+
+                                °C
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="chart-container">
+
+                            <canvas
+                                id="temperatureChart"
+                            ></canvas>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         HUMIDITY CHART
+                    ================================================== -->
+
+                    <div class="chart-card">
+
+                        <div class="chart-card-header">
+
+                            <div>
+
+                                <span class="chart-number">
+                                    FIELD 02
+                                </span>
+
+                                <h3>
+                                    Humidity
+                                </h3>
+
+                                <p>
+                                    Relative humidity readings
+                                </p>
+
+                            </div>
+
+
+                            <div class="chart-badge purple">
+
+                                <span></span>
+
+                                %
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="chart-container">
+
+                            <canvas
+                                id="humidityChart"
+                            ></canvas>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         SOIL MOISTURE CHART
+                    ================================================== -->
+
+                    <div class="chart-card chart-card-wide">
+
+                        <div class="chart-card-header">
+
+                            <div>
+
+                                <span class="chart-number">
+                                    FIELD 03
+                                </span>
+
+                                <h3>
+                                    Soil Moisture
+                                </h3>
+
+                                <p>
+                                    Soil moisture level readings
+                                </p>
+
+                            </div>
+
+
+                            <div class="chart-badge orange">
+
+                                <span></span>
+
+                                %
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="chart-container">
+
+                            <canvas
+                                id="soilMoistureChart"
+                            ></canvas>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     FOOTER
+                ================================================== -->
+
+                <footer class="dashboard-footer">
+
+
+                    <span>
+                        Circuit Tech Monitoring System
+                    </span>
+
+                </footer>
+
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         DASHBOARD SCRIPT
+    ====================================================== -->
+
+    <script
+        type="module"
+        src="./js/dashboard.js"
+    ></script>
+
+
+</body>
+
+</html>
